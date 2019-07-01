@@ -190,10 +190,24 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907011444003_InitialMigration.cs" />
+    <Compile Include="Migrations\201907011444003_InitialMigration.Designer.cs">
+      <DependentUpon>201907011444003_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907011531249_AddedMembershipTypeAndModifiedModels.cs" />
+    <Compile Include="Migrations\201907011531249_AddedMembershipTypeAndModifiedModels.Designer.cs">
+      <DependentUpon>201907011531249_AddedMembershipTypeAndModifiedModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907011725475_AddedSeedData.cs" />
+    <Compile Include="Migrations\201907011725475_AddedSeedData.Designer.cs">
+      <DependentUpon>201907011725475_AddedSeedData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\ViewModels\RandomMovieViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -277,6 +291,17 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201907011444003_InitialMigration.resx">
+      <DependentUpon>201907011444003_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907011531249_AddedMembershipTypeAndModifiedModels.resx">
+      <DependentUpon>201907011531249_AddedMembershipTypeAndModifiedModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907011725475_AddedSeedData.resx">
+      <DependentUpon>201907011725475_AddedSeedData.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

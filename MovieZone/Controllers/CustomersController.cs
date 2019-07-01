@@ -9,27 +9,24 @@ namespace MovieZone.Controllers
 {
     public class CustomersController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public CustomersController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
         // GET: Customers
         public ActionResult Index()
         {
-            var customers = new List<Customer>()
-            {
-                new Customer(){ Id = 1, Name = "Customer 1"},
-                new Customer(){ Id = 2, Name = "Customer 2"}
-            };
+            var customers = _context.Customers.ToList();
 
             return View(customers);
         }
 
         public ActionResult Details(int id)
         {
-            var customers = new List<Customer>()
-            {
-                new Customer(){ Id = 1, Name = "Customer 1"},
-                new Customer(){ Id = 2, Name = "Customer 2"}
-            };
-
-            var customer = customers.FirstOrDefault(x => x.Id == id);
+            var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
 
             if (customer == null)
                 return HttpNotFound();
