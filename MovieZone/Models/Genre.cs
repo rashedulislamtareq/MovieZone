@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace MovieZone.Models
 {
-    public class MembershipType
+    public class Genre
     {
         public byte Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
-        public short SignUpFee { get; set; }
-        public byte DirationInMonth { get; set; }
-        public byte DiscountRate { get; set; }  
     }
-} 
+}

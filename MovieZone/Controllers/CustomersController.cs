@@ -1,9 +1,7 @@
 ﻿using MovieZone.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace MovieZone.Controllers
 {
@@ -19,14 +17,14 @@ namespace MovieZone.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            var customers = _context.Customers.ToList();
+            var customers = _context.Customers.Include(x=>x.MembershipType).ToList();
 
             return View(customers);
         }
 
         public ActionResult Details(int id)
         {
-            var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
+            var customer = _context.Customers.Include(x=>x.MembershipType).FirstOrDefault(x => x.Id == id);
 
             if (customer == null)
                 return HttpNotFound();

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Mvc;
+using System.Data.Entity;
 using MovieZone.Models;
 using MovieZone.Models.ViewModels;
 
@@ -21,7 +22,7 @@ namespace MovieZone.Controllers
 
         public ActionResult Index()
         {
-            var movies = _context.Movies.ToList();
+            var movies = _context.Movies.Include(x=>x.Genre).ToList();
 
             return View(movies);
         }
@@ -34,6 +35,18 @@ namespace MovieZone.Controllers
                 Customers = _context.Customers.ToList()
             };
             return View(viewModel);
+        }
+
+        public ActionResult Details(int id)
+        {
+            var movie = _context.Movies.Include(x => x.Genre).FirstOrDefault(x => x.Id == id);
+
+            if (movie==null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(movie);
         }
     }
 }
