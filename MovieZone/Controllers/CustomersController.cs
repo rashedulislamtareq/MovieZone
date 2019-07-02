@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
+using MovieZone.Models.ViewModels;
 
 namespace MovieZone.Controllers
 {
@@ -31,6 +32,26 @@ namespace MovieZone.Controllers
 
             return View(customer);
 
+        }
+
+        public ActionResult New()
+        {
+            var memberShipTypes = _context.MembershipTypes.ToList();
+            var newCustomerViewModel = new NewCustomerViewModel()
+            {
+                MembershipTypes = memberShipTypes
+            };
+
+            return View(newCustomerViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Create(Customer customer)
+        {
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index","Customers");
         }
     }
 }
