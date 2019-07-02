@@ -92,7 +92,11 @@ namespace MovieZone.Migrations
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
-            
+
+            Sql("Insert into Genre values(1, 'Drama')");
+            Sql("Insert into Genre values(2, 'Si-Fi')");
+            Sql("Insert into Genre values(3, 'Art')");
+
         }
         
         public override void Down()
