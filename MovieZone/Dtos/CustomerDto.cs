@@ -18,7 +18,7 @@ namespace MovieZone.Dtos
 
         public byte MembershipTypeId { get; set; }
 
-        [Min18YearsForMember]
+        //[Min18YearsForMember]
         public DateTime? Birthdate { get; set; }
     }
 }
