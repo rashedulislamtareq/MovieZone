@@ -48,6 +48,17 @@ namespace MovieZone.Controllers
         [HttpPost]
         public ActionResult Save(Customer customer)
         {
+            if (!ModelState.IsValid)
+            {
+                var customerFormViewModel = new CustomerFormViewModel()
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+
+                return View("CustomerForm", customerFormViewModel);
+            }
+
             if (customer.Id==0)
             {
             _context.Customers.Add(customer);
