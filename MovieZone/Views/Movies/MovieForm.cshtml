@@ -35,6 +35,10 @@
     @Html.HiddenFor(x => x.Movie.Id)
     @Html.HiddenFor(x => x.Movie.DateAdded)
 
+
+    //Security to prevent CSRF attack
+    @Html.AntiForgeryToken()
+
     <div class="form-group">
         <button class="btn btn-primary" type="submit">Save</button>
     </div>
