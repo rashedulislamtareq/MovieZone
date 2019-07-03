@@ -14,7 +14,7 @@
 }
 else
 {
-    <table class="table table-bordered table-hover">
+    <table id="customersTable" class="table table-bordered table-hover">
         <thead>
             <tr>
                 <th>Customer</th>
@@ -31,10 +31,37 @@ else
                     <td>
                         @customer.MembershipType.Name
                     </td>
+                    
+                    <td>
+                        <button data-customer-id="@customer.Id" class="btn-link js-delete">Delete</button>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
 
+}
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            $("#customersTable .js-delete").on("click", function() {
+                var button = $(this);
+
+                if (confirm("Are you sure to delete this data?")) {
+                    $.ajax({
+                        url: "/api/customers/" + button.attr("data-customer-id"),
+                        method: "DELETE",
+                        success: function() {
+                            console.log("Success");
+
+                            button.parents("tr").remove();
+                        }
+                    });
+                }
+            })
+        });
+    </script>
 }
 
