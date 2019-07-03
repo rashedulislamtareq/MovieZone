@@ -39,7 +39,8 @@ namespace MovieZone.Controllers
             var memberShipTypes = _context.MembershipTypes.ToList();
             var newCustomerViewModel = new CustomerFormViewModel()
             {
-                MembershipTypes = memberShipTypes
+                MembershipTypes = memberShipTypes,
+                Customer = new Customer()
             };
 
             return View("CustomerForm",newCustomerViewModel);

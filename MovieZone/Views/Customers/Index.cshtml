@@ -19,6 +19,7 @@ else
             <tr>
                 <th>Customer</th>
                 <th>Membership Type</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -48,18 +49,17 @@ else
         $(document).ready(function() {
             $("#customersTable .js-delete").on("click", function() {
                 var button = $(this);
-
-                if (confirm("Are you sure to delete this data?")) {
-                    $.ajax({
-                        url: "/api/customers/" + button.attr("data-customer-id"),
-                        method: "DELETE",
-                        success: function() {
-                            console.log("Success");
-
-                            button.parents("tr").remove();
-                        }
-                    });
-                }
+                bootbox.confirm("Are you sure to delete this data ?", function(result) {
+                    if (result) {
+                        $.ajax({
+                            url: "api/customers/" + button.attr("data-customer-id"),
+                            method: "DELETE",
+                            success: function () {
+                                button.parents("tr").remove();
+                            }
+                        });
+                    }
+                });
             })
         });
     </script>
