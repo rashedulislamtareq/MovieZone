@@ -12,6 +12,7 @@ namespace MovieZone.App_Start
     {
         public static void Register(HttpConfiguration config)
         {
+            //To make json response as camel case
             var settings = config.Formatters.JsonFormatter.SerializerSettings;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             settings.Formatting = Formatting.Indented;
