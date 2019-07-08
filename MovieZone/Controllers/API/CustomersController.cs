@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.Hosting;
 using System.Web.Http;
+using System.Data.Entity;
 using AutoMapper;
 using MovieZone.Dtos;
 using MovieZone.Models;
@@ -24,13 +25,19 @@ namespace MovieZone.Controllers.API
         [HttpGet]
         public IHttpActionResult GetCustomers()
         {
-            return Ok(_context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>));
+            var customers = _context.Customers
+                .Include(x => x.MembershipType)
+                .ToList()
+                .Select(Mapper.Map<Customer, CustomerDto>);
+            return Ok(customers);
         }
 
         //GET /api/customers/1
         public IHttpActionResult GetCustomer(int id)
         {
-            var customer = _context.Customers.FirstOrDefault(x => x.Id == id);
+            var customer = _context.Customers
+                .Include(x=>x.MembershipType)
+                .FirstOrDefault(x => x.Id == id);
 
             if (customer == null)
             {

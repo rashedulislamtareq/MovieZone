@@ -16,6 +16,8 @@ namespace MovieZone.Dtos
 
         public byte GenreId { get; set; }
 
+        public GenreDto Genre { get; set; } 
+
         public DateTime DateAdded { get; set; }
 
         public DateTime ReleaseDate { get; set; }

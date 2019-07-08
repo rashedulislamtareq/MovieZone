@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MovieZone.Models.Customer>
+﻿
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,58 +6,63 @@
 
 <h2>Customers</h2>
 
-@Html.ActionLink("Create", "New", "Customers", null, new {@class="btn btn-primary"})
+@Html.ActionLink("Create", "New", "Customers", null, new { @class = "btn btn-primary" })
 
-@if (!Model.Any())
-{
-    <text>Do not have any customer yet.</text>
-}
-else
-{
-    <table id="customersTable" class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Customer</th>
-                <th>Membership Type</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var customer in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id }, null)
-                    </td>
-                    <td>
-                        @customer.MembershipType.Name
-                    </td>
-                    
-                    <td>
-                        <button data-customer-id="@customer.Id" class="btn-link js-delete">Delete</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
 
-}
+<table id="customersTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Membership Type</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
 
 @section scripts
 {
     <script>
         $(document).ready(function () {
-            $("#customersTable").DataTable();
+            var table = $("#customersTable").DataTable(
+                {
+                    ajax:
+                    {
+                        url: "/api/customers",
+                        dataSrc: ""
+                    },
+                    columns: [
+                        {
+                            data: "name",
+                            render: function (data, type, customer) {
+                                return "<a href='/customers/edit/" + customer.id + "'>" + customer.name + "</a>"
+                            }
+                        },
+                        {
+                            data: "membershipType.name"
+                        },
+                        {
+                            data: "id",
+                            render: function (id) {
+                                return "<button class='btn btn-link js-delete' data-customer-id=" + id + ">Delete</button>"
+                            }
+                        }
+                    ]
+                }
+            );
 
-            $("#customersTable").on("click", ".js-delete",function() {
+            $("#customersTable").on("click", ".js-delete", function () {
                 var button = $(this);
-                bootbox.confirm("Are you sure to delete this data ?", function(result) {
+                bootbox.confirm("Are you sure to delete this data ?", function (result) {
                     if (result) {
                         $.ajax({
-                            url: "api/customers/" + button.attr("data-customer-id"),
+                            url: "/api/customers/" + button.attr("data-customer-id"),
                             method: "DELETE",
                             success: function () {
-                                button.parents("tr").remove();
+                                table.row(button.parents("tr")).remove().draw();
+
                             }
                         });
                     }

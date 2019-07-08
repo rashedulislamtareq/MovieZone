@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using System.Data.Entity;
 using AutoMapper;
 using MovieZone.Dtos;
 using MovieZone.Models;
@@ -23,7 +24,9 @@ namespace MovieZone.Controllers.API
         //GET /api/movies
         public IHttpActionResult GetMovies()
         {
-            var movies = _context.Movies.Select(Mapper.Map<Movie, MovieDto>).ToList();
+            var movies = _context.Movies
+                .Include(x=>x.Genre)
+                .Select(Mapper.Map<Movie, MovieDto>).ToList();
 
             return Ok(movies);
         }
@@ -31,7 +34,9 @@ namespace MovieZone.Controllers.API
         //GET /api/movies/1
         public IHttpActionResult GetMovie(int id)
         {
-            var movie = _context.Movies.FirstOrDefault(x => x.Id == id);
+            var movie = _context.Movies
+                .Include(x=>x.Genre)
+                .FirstOrDefault(x => x.Id == id);
             if (movie==null)
             {
                 return NotFound();
